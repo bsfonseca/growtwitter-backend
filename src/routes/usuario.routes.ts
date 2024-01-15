@@ -9,8 +9,8 @@ export function usuarioRoutes() {
 
     //Rotas Usuário
     router.post("/", usuarioController.criarUsuario);
-    router.get("/", usuarioController.obterUsuario);
-    router.get("/:id", usuarioController.ObterUsuarioId);
+    router.get("/", usuarioController.listarUsuarios);
+    router.get("/:id", usuarioController.obterUsuarioId);
 
     return router;
 }

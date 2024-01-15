@@ -39,7 +39,7 @@ export class UsuarioController {
     }
 
     // Listar usuário
-    public async obterUsuario(req: Request, res: Response) {
+    public async listarUsuarios(req: Request, res: Response) {
         try {
             const result = await repository.usuario.findMany();
             return res.status(200).send({
@@ -53,7 +53,7 @@ export class UsuarioController {
     }
 
     //Listar usuário pelo ID
-    public async ObterUsuarioId(req: Request, res: Response) {
+    public async obterUsuarioId(req: Request, res: Response) {
         try {
             const { id } = req.params;
 

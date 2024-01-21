@@ -127,4 +127,106 @@ export class TweetController {
             });
         }
     }
+
+    public async atualizarTweet(req: Request, res: Response) {
+        try {
+            const { id, idTweet } = req.params;
+            const { conteudo } = req.body;
+
+            if (!conteudo) {
+                return res.status(400).send({
+                    ok: false,
+                    message: "Informe o campo conteudo",
+                });
+            }
+
+            const usuario = await repository.usuario.findUnique({
+                where: {
+                    id,
+                },
+            });
+
+            if (!usuario) {
+                return res.status(404).send({
+                    ok: false,
+                    message: "Usuário não encontrado",
+                });
+            }
+
+            const tweet = await repository.tweet.findUnique({
+                where: {
+                    id: idTweet,
+                },
+            });
+            if (!tweet) {
+                return res.status(404).send({
+                    ok: false,
+                    message: "Tweet não encontrado",
+                });
+            }
+
+            const result = await repository.tweet.update({
+                where: {
+                    id: idTweet,
+                },
+                data: {
+                    conteudo,
+                },
+            });
+            return res.status(200).send({
+                ok: true,
+                message: "Tweet atualizado com sucesso",
+                data: result,
+            });
+        } catch (error: any) {
+            return res.status(500).send({
+                ok: false,
+                message: error.toString(),
+            });
+        }
+    }
+
+    public async deletarTweet(req: Request, res: Response) {
+        try {
+            const { id, idTweet } = req.params;
+            const usuario = await repository.usuario.findUnique({
+                where: {
+                    id,
+                },
+            });
+            if (!usuario) {
+                return res.status(404).send({
+                    ok: false,
+                    message: "Usuário não encontrado",
+                });
+            }
+
+            const tweet = await repository.tweet.findUnique({
+                where: {
+                    id: idTweet,
+                },
+            });
+            if (!tweet) {
+                return res.status(404).send({
+                    ok: false,
+                    message: "Tweet não encontrado",
+                });
+            }
+            await repository.tweet.delete({
+                where: {
+                    id: idTweet,
+                },
+            });
+
+            return res.status(200).send({
+                ok: true,
+                message: "Tweet excluído com sucesso",
+            });
+        } catch (error: any) {
+            return res.status(500).send({
+                ok: false,
+                message: error.toString(),
+            });
+        }
+    }
 }

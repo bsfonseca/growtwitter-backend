@@ -12,6 +12,8 @@ export function tweetRoutes() {
     router.post("/", [validaLoginMiddleware], tweetController.criarTweet);
     router.get("/", [validaLoginMiddleware], tweetController.listarTweets);
     router.get("/:idTweet", [validaLoginMiddleware], tweetController.obterTweet);
+    router.put("/:idTweet", [validaLoginMiddleware], tweetController.atualizarTweet);
+    router.delete("/:idTweet", [validaLoginMiddleware], tweetController.deletarTweet);
 
     return router;
 }

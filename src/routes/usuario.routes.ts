@@ -13,7 +13,7 @@ export function usuarioRoutes() {
     router.get("/", usuarioController.listarUsuarios);
     router.get("/:id", usuarioController.obterUsuarioId);
     router.put("/:id", [validaLoginMiddleware], usuarioController.atualizarUsuario);
-    router.delete("/:id", usuarioController.deletarUsuario);
+    router.delete("/:id", [validaLoginMiddleware], usuarioController.deletarUsuario);
 
     return router;
 }

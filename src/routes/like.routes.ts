@@ -9,6 +9,6 @@ export function likeRouter() {
     const likeController = new LikeController();
 
     router.post("/", [validaLoginMiddleware], likeController.criarLike);
-
+    router.delete("/", [validaLoginMiddleware], likeController.deletarLike);
     return router;
 }

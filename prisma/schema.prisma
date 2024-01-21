@@ -18,7 +18,7 @@ model Usuario {
   senha String @db.VarChar(50)
 
   token String?
-  
+
   tweets Tweet[]
   likes Like[]
 
@@ -38,6 +38,7 @@ model Tweet {
 }
 
 model Like {
+  
   idUsuario String @db.Uuid
   idTweet String @db.Uuid
   usuario Usuario @relation(fields: [idUsuario], references: [id])

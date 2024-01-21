@@ -66,4 +66,67 @@ export class LikeController {
             });
         }
     }
+    public async deletarLike(req: Request, res: Response) {
+        try {
+            const { id, idTweet } = req.params;
+            const usuario = await repository.usuario.findUnique({
+                where: {
+                    id,
+                },
+            });
+            if (!usuario) {
+                return res.status(404).send({
+                    ok: false,
+                    message: "Usuário não encontrado",
+                });
+            }
+
+            const tweet = await repository.tweet.findUnique({
+                where: {
+                    id: idTweet,
+                },
+            });
+            if (!tweet) {
+                return res.status(404).send({
+                    ok: false,
+                    message: "Tweet não encontrado",
+                });
+            }
+
+            const like = await repository.like.findUnique({
+                where: {
+                    idUsuario_idTweet: {
+                        idTweet,
+                        idUsuario: id,
+                    },
+                },
+            });
+
+            if (!like) {
+                return res.status(404).send({
+                    ok: false,
+                    message: "Like não encontrado",
+                });
+            }
+
+            await repository.like.delete({
+                where: {
+                    idUsuario_idTweet: {
+                        idTweet,
+                        idUsuario: id,
+                    },
+                },
+            });
+
+            return res.status(200).send({
+                ok: true,
+                message: "Like excluído com sucesso",
+            });
+        } catch (error: any) {
+            return res.status(500).send({
+                ok: false,
+                message: error.toString(),
+            });
+        }
+    }
 }

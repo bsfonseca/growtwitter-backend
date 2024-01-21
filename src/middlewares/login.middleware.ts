@@ -9,7 +9,7 @@ export async function validaLoginMiddleware(req: Request, res: Response, next: N
         if (!authorization) {
             return res.status(401).send({
                 ok: false,
-                message: "Token de autenticação não autorizado",
+                message: "Token de autenticação não informado",
             });
         }
 
@@ -22,9 +22,11 @@ export async function validaLoginMiddleware(req: Request, res: Response, next: N
         if (!usuario || usuario.token !== authorization) {
             return res.status(401).send({
                 ok: false,
-                message: "Token de validação não informado",
+                message: "Token de autenticação inválido",
             });
         }
+
+        next();
     } catch (error: any) {
         return res.status(500).send({
             ok: false,

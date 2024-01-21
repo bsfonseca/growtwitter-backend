@@ -96,4 +96,83 @@ export class UsuarioController {
             });
         }
     }
+
+    public async atualizarUsuario(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const { nome } = req.body;
+
+            if (!nome) {
+                return res.status(400).send({
+                    ok: false,
+                    message: "Informe o para atualizar",
+                });
+            }
+
+            const usuario = await repository.usuario.findUnique({
+                where: {
+                    id,
+                },
+            });
+
+            if (!usuario) {
+                return res.status(404).send({
+                    ok: false,
+                    message: "Usuário não existe",
+                });
+            }
+
+            const result = await repository.usuario.update({
+                where: {
+                    id,
+                },
+                data: {
+                    nome,
+                },
+            });
+
+            return res.status(200).send({
+                ok: true,
+                message: "Nome atualizado com sucesso",
+                data: result,
+            });
+        } catch (error: any) {
+            return res.status(500).send({
+                ok: false,
+                message: error.toString(),
+            });
+        }
+    }
+    public async deletarUsuario(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const usuario = await repository.usuario.findUnique({
+                where: {
+                    id,
+                },
+            });
+            if (!usuario) {
+                return res.status(404).send({
+                    ok: false,
+                    message: "Usuário não encontrado",
+                });
+            }
+
+            await repository.usuario.delete({
+                where: {
+                    id,
+                },
+            });
+
+            return res.status(200).send({
+                ok: true,
+                message: "Usuário excluído com sucesso",
+            });
+        } catch (error: any) {
+            return res.status(500).send({
+                ok: false,
+                message: error.toString(),
+            });
+        }
+    }
 }

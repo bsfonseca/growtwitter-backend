@@ -5,11 +5,10 @@ import { randomUUID } from "crypto";
 export class LoginController {
     public async login(req: Request, res: Response) {
         try {
-            const { email, username, senha } = req.body;
+            const { username, senha } = req.body;
 
             const usuario = await repository.usuario.findFirst({
                 where: {
-                    email,
                     username,
                     senha,
                 },
@@ -38,7 +37,7 @@ export class LoginController {
                 message: "Login realizado com sucesso",
                 data: {
                     id: usuario.id,
-                    nome: usuario.id,
+                    nome: usuario.nome,
                     token,
                 },
             });

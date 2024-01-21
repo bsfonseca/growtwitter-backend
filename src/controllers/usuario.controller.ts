@@ -22,7 +22,13 @@ export class UsuarioController {
             const usuario = new Usuario(nome, email, username, senha);
 
             const result = await repository.usuario.create({
-                data: usuario,
+                data: {
+                    id: usuario.id,
+                    nome: usuario.nome,
+                    email: usuario.email,
+                    username: usuario.username,
+                    senha,
+                },
             });
 
             return res.status(201).send({
@@ -57,9 +63,18 @@ export class UsuarioController {
         try {
             const { id } = req.params;
 
-            const usuario = await repository.usuario.findMany({
+            const usuario = await repository.usuario.findUnique({
                 where: {
                     id,
+                },
+                select: {
+                    id: true,
+                    nome: true,
+                    email: true,
+                    username: true,
+                    token: true,
+                    tweets: true,
+                    likes: true,
                 },
             });
 

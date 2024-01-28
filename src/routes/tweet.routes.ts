@@ -15,5 +15,7 @@ export function tweetRoutes() {
     router.put("/:idTweet", [validaLoginMiddleware], tweetController.atualizarTweet);
     router.delete("/:idTweet", [validaLoginMiddleware], tweetController.deletarTweet);
 
+    router.get("/all", [validaLoginMiddleware], tweetController.listarTodosTweets);
+
     return router;
 }

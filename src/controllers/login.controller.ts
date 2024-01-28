@@ -7,6 +7,13 @@ export class LoginController {
         try {
             const { username, senha } = req.body;
 
+            if (!username || !senha) {
+                return res.status(400).send({
+                    ok: false,
+                    message: "Campos não informados",
+                });
+            }
+
             const usuario = await repository.usuario.findFirst({
                 where: {
                     username,

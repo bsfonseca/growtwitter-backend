@@ -113,6 +113,12 @@ export class TweetController {
                 where: {
                     idUsuario: id,
                 },
+                select: {
+                    id: true,
+                    conteudo: true,
+                    tipo: true,
+                    usuario: true,
+                },
             });
 
             return res.status(200).send({
@@ -125,6 +131,26 @@ export class TweetController {
                 ok: false,
                 message: error.toString(),
             });
+        }
+    }
+
+    public async listarTodosTweets(req: Request, res: Response) {
+        try {
+            const result = await repository.tweet.findMany({
+                select: {
+                    id: true,
+                    conteudo: true,
+                    tipo: true,
+                    usuario: true,
+                },
+            });
+            return res.status(200).send({
+                ok: true,
+                message: "Tweets obtidos com sucesso",
+                data: result,
+            });
+        } catch (error: any) {
+            return error.toString();
         }
     }
 

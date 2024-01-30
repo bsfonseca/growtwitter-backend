@@ -34,6 +34,7 @@ model Tweet {
   usuario Usuario @relation(fields: [idUsuario], references: [id])
   likes Like[]
 
+  dtCriacao DateTime @default(now()) @map("dt_criacao")
   @@map("tweet")
 }
 

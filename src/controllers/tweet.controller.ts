@@ -143,6 +143,10 @@ export class TweetController {
                     tipo: true,
                     usuario: true,
                 },
+
+                orderBy: {
+                    dtCriacao: "desc",
+                },
             });
             return res.status(200).send({
                 ok: true,

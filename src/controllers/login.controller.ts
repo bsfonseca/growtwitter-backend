@@ -47,6 +47,7 @@ export class LoginController {
                     nome: usuario.nome,
                     token,
                     urlPhoto: usuario.urlPhoto,
+                    username: usuario.username,
                 },
             });
         } catch (error: any) {

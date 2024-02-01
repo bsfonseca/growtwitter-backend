@@ -27,7 +27,7 @@ model Usuario {
 
 model Tweet {
   id String @db.Uuid @id @default(uuid())
-  conteudo String @db.VarChar(100)
+  conteudo String @db.VarChar(255)
   tipo String @db.Char(1)
 
   idUsuario String @db.Uuid
